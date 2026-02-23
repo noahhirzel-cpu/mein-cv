@@ -1,0 +1,6 @@
+applications:
+- name: mein-counter-app-hello-world
+  memory: 128M
+  buildpacks:
+    - nodejs_buildpack
+  command: npm start

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Mein Lebenslauf</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; margin-top: 50px; }
+        #counter { font-size: 4em; font-weight: bold; color: #007bff; }
+        button { padding: 10px 20px; font-size: 1.2em; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <h1>Welcome</h1>
+    <div id="counter">0</div>
+    <br>
+
+    <script>
+    const counterElement = document.getElementById('counter');
+
+    // 1. Funktion: Den Zähler vom Server laden und erhöhen
+    async function updateCounter() {
+        try {
+            // Wir rufen die "Funkstation" in der server.js auf
+            const response = await fetch('/api/visitor-count');
+            const data = await response.json();
+            
+            // Wir setzen die Zahl, die aus der Datenbank kommt, ins HTML
+            counterElement.innerText = data.counter;
+        } catch (err) {
+            console.error("Fehler beim Abrufen des Zählers:", err);
+            counterElement.innerText = "!";
+        }
+    }
+
+    // 2. Beim Laden der Seite sofort den aktuellen Stand anzeigen
+    window.onload = updateCounter;
+
+    // 3. Wenn man auf den Button klickt, die Funktion erneut ausführen
+    function increaseCounter() {
+        updateCounter();
+    }
+</script>
+<a href="/Kontakt/">Lebenslauf</a>
+</body>
+</html>

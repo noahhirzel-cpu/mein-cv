@@ -1,0 +1,48 @@
+name: Deploy to STACKIT CF
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: stackit-ubuntu-20
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Install Tools (CF & STACKIT CLI)
+        run: |
+          # CF CLI Repository hinzufügen
+          wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key | sudo gpg --dearmor -o /usr/share/keyrings/cli.cloudfoundry.org.gpg
+          echo "deb [signed-by=/usr/share/keyrings/cli.cloudfoundry.org.gpg] https://packages.cloudfoundry.org/debian stable main" | sudo tee /etc/apt/sources.list.d/cloudfoundry-cli.list
+          
+          # STACKIT CLI Repository hinzufügen
+          curl https://packages.stackit.cloud/keys/key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/stackit.gpg
+          echo "deb [signed-by=/usr/share/keyrings/stackit.gpg] https://packages.stackit.cloud/apt/cli stackit main" | sudo tee -a /etc/apt/sources.list.d/stackit.list
+          
+          sudo apt-get update
+          sudo apt-get install -y cf8-cli stackit
+
+      - name: Cloud Foundry Login & Push
+        env:
+          CF_USER: ${{ secrets.CF_USER }}
+          CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+          CF_ORG: ${{ secrets.CF_ORG }}
+          CF_SPACE: ${{ secrets.CF_SPACE }}
+          CF_API: "https://api.system.01.cf.eu01.stackit.cloud"
+        run: |
+          # 1. API setzen
+          cf api "$CF_API"
+          
+          # 2. Login (Das hat ja schon geklappt!)
+          cf auth "$CF_USER" "$CF_PASSWORD"
+          
+          # 3. Ziel setzen
+          cf target -o "$CF_ORG" -s "$CF_SPACE"
+          
+          # 4. Push mit explizitem Pfad zum Manifest UND zum Code
+          # -f zeigt auf die Manifest-Datei
+          # -p zeigt auf den Ordner mit dem Code
+          cf push -f ./cf-hello-world/manifest.yml -p ./cf-hello-world
