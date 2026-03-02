@@ -2,11 +2,11 @@
 
 <div align="center">
   <img src="https://raw.githubusercontent.com/stackitcloud/stackit-cli/main/.github/images/stackit-logo.svg" alt="STACKIT logo" width="40%"/>
-<br/>
-<br/>
+  <br/>
+  <br/>
 
-
-
+  <h3> <a href="https://mein-counter-app-hello-world.apps.01.cf.eu01.stackit.cloud/Kontakt/">Mein CV</a></h3>
+  <hr />
 </div>
 
 ## Die Idee hinter dem Projekt
