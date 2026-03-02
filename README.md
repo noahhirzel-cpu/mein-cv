@@ -5,7 +5,7 @@
   <br/>
   <br/>
 
-  <h3> <a href="https://mein-counter-app-hello-world.apps.01.cf.eu01.stackit.cloud/Kontakt/">Mein CV</a></h3>
+  <h3> <a href="https://mein-counter-app-hello-world.apps.01.cf.eu01.stackit.cloud/">Mein CV</a></h3>
   <hr />
 </div>
 
