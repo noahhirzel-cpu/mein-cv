@@ -1,0 +1,8 @@
+[
+  {
+    "protocol": "tcp",
+    "destination": "188.34.82.140",
+    "ports": "5432",
+    "description": "Erlaube Zugriff auf die Postgres-Datenbank"
+  }
+]
